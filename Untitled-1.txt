@@ -1,0 +1,228 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?bookTitle ?movieTitle ?movieCountry ?bookCountry ?lbl
+WHERE {
+  ?movie wdt:P31 wd:Q11424;
+         wdt:P1476 ?movieTitle;
+          wdt:P495/rdfs:label ?movieCountry.
+  ?movie wdt:P144 ?book.
+  ?book wdt:P31 wd:Q7725634;
+        rdfs:label "War and Peace"@en;
+    	wdt:P1476 ?bookTitle;
+        wdt:P495/rdfs:label ?bookCountry.
+  FILTER(LANG(?bookTitle) = "en").
+  FILTER(LANG(?movieTitle) = "en").
+  FILTER(LANG(?bookCountry) = "en").
+  FILTER(LANG(?movieCountry) = "en").
+}
+LIMIT 25
+
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?bookTitle ?movieTitle ?movieCountry ?bookCountryLbl
+WHERE {
+  ?movie wdt:P31 wd:Q11424;
+         wdt:P1476 ?movieTitle;
+          wdt:P495 ?movieCountryObj.
+  ?movieCountryObj rdfs:label ?movieCountry.
+  ?movie wdt:P144 ?book.
+  ?book wdt:P31 wd:Q7725634;
+    	wdt:P1476 ?bookTitle;
+        wdt:P495 ?bookCountry.
+  FILTER(?movieCountry != "United States of America"@en).
+  FILTER(LANG(?bookTitle) = "en").
+  FILTER(LANG(?movieTitle) = "en").
+  FILTER(LANG(?movieCountry) = "en").
+}
+LIMIT 25
+
+
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?bookTitle ?movieTitle ?movieCountry ?bookCountry
+WHERE {
+  ?movie wdt:P31 wd:Q11424;
+         wdt:P1476 ?movieTitle;
+          wdt:P495 ?movieCountryObj.
+  ?movieCountryObj rdfs:label ?movieCountry.
+  ?movie wdt:P144 ?book.
+  ?book wdt:P31 wd:Q7725634;
+    	wdt:P1476 ?bookTitle;
+        wdt:P495 ?bookCountryObj.
+  ?bookCountryObj rdfs:label ?bookCountry.
+ # FILTER(?movieCountry != "United States of America"@en).
+  FILTER(CONTAINS(?bookTitle,"war"@en)).
+  FILTER(LANG(?bookTitle) = "en").
+  FILTER(LANG(?movieTitle) = "en").
+  FILTER(LANG(?movieCountry) = "en").
+  FILTER(LANG(?bookCountry) = "en").
+}
+LIMIT 25
+
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?city (COUNT(?twinTown) as ?numberOfTwins)
+WHERE {
+  ?city a dbo:PopulatedPlace;
+  	dbo:twinTown ?twinTown.
+}
+GROUP BY ?city
+ORDER BY DESC(?numberOfTwins)
+LIMIT 500
+
+
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?organization (SAMPLE(?orgName) as ?name) (COUNT(?subOrg) as ?subOrgCount)
+WHERE {
+  ?organization wdt:P31 ?orgType;
+                rdfs:label ?orgName;
+                wdt:P17 ?orgCountry;
+                wdt:P355 ?subOrg.
+  ?subOrg wdt:P17 ?subOrgCountry.
+  FILTER(?orgType in (wd:Q4830453, wd:Q6881511, wd:Q43229)).
+  FILTER(?subOrgCountry != ?orgCountry).
+  FILTER(LANG(?orgName) = "en").
+}
+GROUP BY ?organization
+ORDER BY DESC(?subOrgCount)
+LIMIT 20
+
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?organization (SAMPLE(?orgName) as ?name) (COUNT(?subOrg) as ?subOrgCount)
+WHERE {
+  ?organization wdt:P31 ?orgType;
+                rdfs:label ?orgName;
+                wdt:P17 ?orgCountry;
+                wdt:P355 ?subOrg.
+  ?subOrg wdt:P17 ?subOrgCountry.
+  ?orgCountry rdfs:label ?orgCountryLbl.
+  FILTER(?orgType in (wd:Q4830453, wd:Q6881511, wd:Q43229)).
+  FILTER(?subOrgCountry != ?orgCountry).
+  FILTER(contains(?orgCountryLbl,"United States"@en)).
+  FILTER(LANG(?orgName) = "en").
+  FILTER(LANG(?orgCountryLbl) = "en").
+}
+GROUP BY ?organization
+ORDER BY DESC(?subOrgCount)
+LIMIT 20
+
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX db: <http://dbpedia.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wk: <http://www.wikidata.org/wiki/>
+PREFIX wl: <http://www.wsmo.org/ns/wsmo-lite#>
+
+
+SELECT ?organization (SAMPLE(?orgName) as ?name) (COUNT(?subOrg) as ?subOrgCount) (SAMPLE(?img) as ?image) (SAMPLE(?logo) as ?l)
+WHERE {
+  ?organization wdt:P31 ?orgType;
+                rdfs:label ?orgName;
+                wdt:P17 ?orgCountry;
+                wdt:P355 ?subOrg.
+  ?subOrg wdt:P17 ?subOrgCountry.
+  ?orgCountry rdfs:label ?orgCountryLbl.
+  OPTIONAL {?organization wdt:P18 ?img}.
+  OPTIONAL {?organization wdt:P154 ?logo}.
+  FILTER(?orgType in (wd:Q4830453, wd:Q6881511, wd:Q43229)).
+  FILTER(?subOrgCountry != ?orgCountry).
+  FILTER(contains(?orgCountryLbl,"United States"@en)).
+  FILTER(LANG(?orgName) = "en").
+  FILTER(LANG(?orgCountryLbl) = "en").
+}
+GROUP BY ?organization
+ORDER BY DESC(?subOrgCount)
+LIMIT 20
